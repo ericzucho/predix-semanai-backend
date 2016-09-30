@@ -14,8 +14,11 @@ amountOfFuturePredictions = 5000
 
 @app.route('/engines/list')
 def enginesList():
+    exceptEngines = [700198,700199]
     resultJson = "["
-    for item in range(700101, 700198):
+    for item in range(700101, 700202):
+        if item in exceptEngines:
+            continue
         if item == 700101:
             resultJson += "{\"key\":\"" + str(item) + "\",\"val\":\"" + str(item)+"\"}"
         else:
@@ -121,7 +124,7 @@ def critical():
     with open('preprocessedEngines.csv') as csvfile:
         reader = csv.DictReader(csvfile)
         for row in reader:
-            if(float(row['CurrentAcumulatedTime']) > 12000):
+            if(float(row['CurrentAcumulatedTime']) > 11000):
                 if not firstRow:
                     jsonString += "," + str(row['Engine'])
                 else:
